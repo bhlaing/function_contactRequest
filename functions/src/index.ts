@@ -19,19 +19,16 @@ export const requestContact = functions.firestore.document('users/{userId}/conta
             }
         } catch(err) {
             console.log('request friend failed');
-            if(updatedContactRequest != null && change?.before?.data() != null) {
+            if(updatedContactRequest != null) {
                 const writeResult = await admin.firestore().collection('users')
                 .doc(context.params.userId)
                 .collection('contacts')
                 .doc(updatedContactRequest.userId)
                 .delete()
-
+        
                 console.log('Contact request reverted:', writeResult);
             }
-  
         }
-
-
     });
 
 
